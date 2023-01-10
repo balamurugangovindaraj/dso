@@ -1,50 +1,52 @@
 pipeline {
-
   agent {
     kubernetes {
       yamlFile 'build-agent.yaml'
-
     }
   }
-
   stages {
     stage('Build') {
       agent any
-        stage('Compile') {
-          steps {
-            container('maven') {
-              sh 'mvn compile'
-            }
-          }
+      steps {
+        container('maven') {
+          sh 'mvn compile'
         }
       }
     }
-
     stage('Test') {
       agent any
-        stage('Unit Tests') {
-          steps {
-            container('maven') {
-              sh 'mvn test'
-            }
-          }
+      steps {
+        container('maven') {
+          sh 'mvn test'
         }
       }
-    
+    }
     stage('Package') {
       agent any
-        stage('Create Jarfile') {
-          steps {
-            container('maven') {
-              sh 'mvn package -DskipTests'
-            }
-          }
+      steps {
+        container('maven') {
+          sh 'mvn package -DskipTests'
         }
       }
-
+    }
+    stage('Static Analysis') {
+      steps {
+        container('sonarqube') {
+          sh 'sonar-scanner'
+        }
+      }
+    }
     stage('Deploy to Dev') {
       steps {
-        sh "echo done"
+        kubernetesDeploy(
+          configs: 'deployment.yaml',
+          context: 'my-k8s-cluster',
+          namespace: 'dev',
+          envVars: [
+            KUBERNETES_NAMESPACE: 'dev'
+          ]
+        )
       }
     }
   }
+}
