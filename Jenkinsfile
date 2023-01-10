@@ -6,6 +6,11 @@ pipeline {
     }
   }
   stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/balamurugangovindaraj/dso.git'
+      }
+    }
     stage('Build') {
       agent any
         stage('Compile') {
