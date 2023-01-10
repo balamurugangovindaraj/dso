@@ -38,18 +38,15 @@ pipeline {
             }
           }
         }
-        stage('Docker BnP') {
+        stage('OCI Image Build and Publish') {
           steps {
             container('kaniko') {
-              sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/baladevsecops/dso:latest'
+                 sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/baladevsecops/dso'
             }
           }
         }
       }
     }
-
-    
-
     stage('Deploy to Dev') {
       steps {
         // TODO
