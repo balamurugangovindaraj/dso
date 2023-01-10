@@ -24,7 +24,7 @@ spec:
         - mountPath: /tmp/trivycache/
           name: trivycache
     - name: kaniko
-      image: gcr.io/kaniko-project/executor:v1.6.0-debug
+      image: gcr.io/kaniko-project/executor:debug
       imagePullPolicy: Always
       command:
         - sleep
@@ -32,7 +32,7 @@ spec:
         - 99d
       volumeMounts:
         - name: jenkins-docker-cfg
-          mountPath: /kaniko/docker
+          mountPath: /kaniko/.docker
     - name: trufflehog
       image: rmkanda/trufflehog
       command:
