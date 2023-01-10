@@ -2,40 +2,45 @@ pipeline {
   agent {
     kubernetes {
       yamlFile 'build-agent.yaml'
+      defaultContainer 'maven'
+      idleMinutes 1
     }
   }
   stages {
     stage('Build') {
-      agent any
-      steps {
-        container('maven') {
-          sh 'mvn compile'
+      parallel {
+        stage('Compile') {
+          steps {
+            container('maven') {
+              sh 'mvn compile'
+            }
+          }
         }
       }
     }
     stage('Test') {
-      agent any
-      steps {
-        container('maven') {
-          sh 'mvn test'
+      parallel {
+        stage('Unit Tests') {
+          steps {
+            container('maven') {
+              sh 'mvn test'
+            }
+          }
         }
       }
     }
     stage('Package') {
-      agent any
-      steps {
-        container('maven') {
-          sh 'mvn package -DskipTests'
+      parallel {
+        stage('Create Jarfile') {
+          steps {
+            container('maven') {
+              sh 'mvn package -DskipTests'
+            }
+          }
         }
       }
     }
-    stage('Static Analysis') {
-      steps {
-        container('sonarqube') {
-          sh 'sonar-scanner'
-        }
-      }
-    }
+
     stage('Deploy to Dev') {
       steps {
         // TODO
