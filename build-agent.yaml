@@ -7,17 +7,11 @@ spec:
   containers:
     - name: maven
       image: maven:alpine
-      command:
-        - cat
-      tty: true
       volumeMounts:
         - name: m2
           mountPath: /root/.m2/
     - name: docker-tools
       image: rmkanda/docker-tools:latest
-      command:
-        - cat
-      tty: true
       volumeMounts:
         - mountPath: /var/run
           name: docker-sock
@@ -25,21 +19,24 @@ spec:
           name: trivycache
     - name: trufflehog
       image: rmkanda/trufflehog
-      command:
-        - cat
-      tty: true
     - name: licensefinder
       image: licensefinder/license_finder
-      command:
-        - cat
-      tty: true
   volumes:
     - name: m2
-      hostPath:
-        path: /tmp/.m2/
+      emptyDir: {}
     - name: docker-sock
-      hostPath:
-        path: /var/run
+      emptyDir: {}
     - name: trivycache
-      hostPath:
-        path: /tmp/trivycache/
+      emptyDir: {}
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 30
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 30
