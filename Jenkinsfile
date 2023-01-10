@@ -7,7 +7,7 @@ pipeline {
   }
   stages {
     stage('Build') {
-      parallel {
+      agent any
         stage('Compile') {
           steps {
             container('maven') {
@@ -18,7 +18,7 @@ pipeline {
       }
     }
     stage('Test') {
-      parallel {
+      agent any
         stage('Unit Tests') {
           steps {
             container('maven') {
@@ -29,7 +29,7 @@ pipeline {
       }
     }
     stage('Package') {
-      parallel {
+      agent any
         stage('Create Jarfile') {
           steps {
             container('maven') {
