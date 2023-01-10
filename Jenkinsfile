@@ -1,16 +1,13 @@
 pipeline {
+
   agent {
     kubernetes {
       yamlFile 'build-agent.yaml'
 
     }
   }
+
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/balamurugangovindaraj/dso.git'
-      }
-    }
     stage('Build') {
       agent any
         stage('Compile') {
@@ -22,6 +19,7 @@ pipeline {
         }
       }
     }
+
     stage('Test') {
       agent any
         stage('Unit Tests') {
@@ -32,7 +30,7 @@ pipeline {
           }
         }
       }
-    }
+    
     stage('Package') {
       agent any
         stage('Create Jarfile') {
@@ -43,13 +41,10 @@ pipeline {
           }
         }
       }
-    }
 
     stage('Deploy to Dev') {
       steps {
-        // TODO
         sh "echo done"
       }
     }
   }
-}
