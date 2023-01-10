@@ -38,12 +38,7 @@ pipeline {
     }
     stage('Deploy to Dev') {
       steps {
-        kubernetesDeploy(
-          configs: 'deployment.yaml',
-          context: 'my-k8s-cluster',
-          namespace: 'dev',
-          envVars: [
-            KUBERNETES_NAMESPACE: 'dev'
+ 
           ]
         )
       }
