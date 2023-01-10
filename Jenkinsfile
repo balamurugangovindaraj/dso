@@ -41,8 +41,6 @@ pipeline {
         stage('Docker BnP') {
           steps {
             container('kaniko') {
-              sh 'cat /home/jenkins/agent/workspace/dso_main/Dockerfile'
-              sh 'cat /home/jenkins/agent/workspace/dso_main'
               sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=https://hub.docker.com/r/baladevsecops/dso:latest'
             }
           }
