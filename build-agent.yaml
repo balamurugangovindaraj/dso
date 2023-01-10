@@ -23,16 +23,6 @@ spec:
           name: docker-sock
         - mountPath: /tmp/trivycache/
           name: trivycache
-    - name: trufflehog
-      image: rmkanda/trufflehog
-      command:
-        - cat
-      tty: true
-    - name: licensefinder
-      image: licensefinder/license_finder
-      command:
-        - cat
-      tty: true
   volumes:
     - name: m2
       hostPath:
@@ -40,6 +30,3 @@ spec:
     - name: docker-sock
       hostPath:
         path: /var/run
-    - name: trivycache
-      hostPath:
-        path: /tmp/trivycache/
