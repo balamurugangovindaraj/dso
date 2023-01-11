@@ -38,10 +38,12 @@ pipeline {
             }
           }
         }
-        stage('OCI Image Build and Publish') {
+        stage('OCI Image Build and push') {
           steps {
             container('kaniko') {
-                 sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/baladevsecops/dso'
+              sh '''
+          /kaniko/executor --verbosity debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/baladevsecops/dso:latest
+          '''
             }
           }
         }
