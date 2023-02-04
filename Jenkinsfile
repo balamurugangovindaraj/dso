@@ -70,7 +70,7 @@ pipeline {
     }
     stage('SAST') {
       steps {
-        container('slscan') {
+        container('shiftleftscan') {
           sh 'scan --type java,depscan --build'
         }
       }
