@@ -22,7 +22,7 @@ pipeline {
       parallel {
         stage('Unit Tests') {
           steps {
-            // Add your unit test steps here
+            sh 'echo Unit Tests'
           }
         }
         stage('SCA') {
