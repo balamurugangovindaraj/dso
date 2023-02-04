@@ -21,6 +21,9 @@ pipeline {
     stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
+          steps {
+            // Add your unit test steps here
+          }
         }
         stage('SCA') {
           steps {
