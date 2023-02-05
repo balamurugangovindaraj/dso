@@ -46,7 +46,7 @@
   - :who: 
     :why: 
     :versions:
-    - 1.2.7
+    - 1.2.9
     :when: 2023-02-04 15:26:48.756587000 Z
 - - :approve
   - logback-classic
