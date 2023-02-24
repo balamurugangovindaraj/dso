@@ -8,8 +8,9 @@ WORKDIR /run
 COPY --from=BUILD /app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
 ARG USER=devops
-ENV HOME=/home/$USER
-RUN adduser -D ${USER} && chown ${USER}:${USER} /run/demo.jar
+ENV HOME /home/$USER
+RUN adduser -D $USER && \
+chown $USER:$USER /run/demo.jar
 USER $USER
 
 EXPOSE 8080
