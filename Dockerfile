@@ -1,5 +1,6 @@
 FROM maven:3-eclipse-temurin-19-alpine as BUILD
-RUN apk update && apk upgrade && \
+RUN apk update && \
+    apk add --no-cache openjdk11-jdk && \
     apk add --no-cache libtasn1
 WORKDIR /app
 COPY .  .
