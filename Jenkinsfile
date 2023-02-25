@@ -100,6 +100,24 @@ pipeline {
         }
       }
     }
+    stage('Image Analysis') {
+      parallel {
+        stage('Image Linting') {
+          steps {
+            container('docker-tools') {
+              sh 'dockle docker.io/baladevsecops/dso:v1'
+            } 
+          }
+        }
+        stage('Image Scan') {
+          steps {
+            container('docker-tools') {
+              sh 'trivy image --exit-code 1 baladevsecops/dso:v1'
+            }
+          }
+        }
+      }
+    } 
     stage('Deploy to Dev') {
       steps {
         // TODO
