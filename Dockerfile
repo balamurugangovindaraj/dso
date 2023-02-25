@@ -1,14 +1,14 @@
 FROM maven:3-eclipse-temurin-19-alpine as BUILD
 RUN apk update && apk upgrade && \
     apk add --no-cache openjdk11-jdk && \
-    apk add --no-cache libtasn1
+    apk add --no-cache libtasn1=4.18.0-r1
 WORKDIR /app
 COPY .  .
 RUN mvn package -DskipTests 
 
 FROM openjdk:19-jdk-alpine3.16 as RUN
 RUN apk update && \
-    apk add --no-cache libtasn1
+    apk add --no-cache libtasn1=4.18.0-r1
 WORKDIR /run
 COPY --from=BUILD /app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
