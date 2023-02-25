@@ -93,7 +93,7 @@ pipeline {
           steps {
             container('kaniko') {
               sh '''
-          /kaniko/executor --verbosity debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/baladevsecops/dso:latest
+          /kaniko/executor --verbosity debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/baladevsecops/dso
           '''
             }
           }
@@ -105,14 +105,14 @@ pipeline {
         stage('Image Linting') {
           steps {
             container('docker-tools') {
-              sh 'dockle docker.io/baladevsecops/dso:v1'
+              sh 'dockle docker.io/baladevsecops/dso'
             } 
           }
         }
         stage('Image Scan') {
           steps {
             container('docker-tools') {
-              sh 'trivy image --exit-code 1 baladevsecops/dso:v1'
+              sh 'trivy image --exit-code 1 baladevsecops/dso'
             }
           }
         }
