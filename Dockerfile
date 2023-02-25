@@ -7,8 +7,7 @@ COPY .  .
 RUN mvn package -DskipTests 
 
 FROM openjdk:19-jdk-alpine3.16 as RUN
-RUN apk update && apk upgrade && \
-    apk add --no-cache libtasn1
+
 WORKDIR /run
 COPY --from=BUILD /app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
