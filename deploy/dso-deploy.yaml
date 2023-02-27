@@ -18,8 +18,8 @@ spec:
         app: dso
     spec:
       containers:
-      - image: baladevsecops:dso
-        name: baladevsecops
+      - image: baladevsecops/dso
+        name: dso
         ports:
         - containerPort: 8080
         resources: {}
