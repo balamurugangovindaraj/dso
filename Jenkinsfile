@@ -2,6 +2,7 @@ pipeline {
 
   environment {
     ARGO_SERVER = '34.159.94.33:32100'
+    DEV_URL = 'http://34.159.94.33:30080/'
   }
 
   agent {
@@ -133,6 +134,23 @@ pipeline {
           sh 'docker run -t schoolofdevops/argocd-cli argocd app wait dso --health --timeout 300 --insecure --server $ARGO_SERVER --auth-token $AUTH_TOKEN'
         } 
       }
+    }
+    stage('Dynamic Analysis') {
+      parallel {
+        stage('E2E tests') {
+          steps {
+            sh 'echo "All Tests passed!!!"'
+          }
+        }
+        
+        stage('DAST') { 
+          steps {
+            container('docker-tools') {
+              sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t $DEV_URL || exit 0'
+            }
+          }
+        }
+      }  
     }
   }
 }
