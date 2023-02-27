@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dso
+  name: dso
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dso
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dso
+    spec:
+      containers:
+      - image: baladevsecops:dso
+        name: baladevsecops
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}
