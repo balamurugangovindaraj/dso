@@ -127,7 +127,7 @@ pipeline {
     stage('Scan k8s Deploy Code') {
       steps {
         container('docker-tools') {
-            sh 'kubesec scan deploy/dso-demo-deploy.yaml'
+            sh 'kubesec scan deploy/dso-deploy.yaml'
         }
       }
     }    
