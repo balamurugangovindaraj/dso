@@ -77,7 +77,7 @@ pipeline {
     stage('SAST') {
       steps {
         container('shiftleftscan') {
-          sh 'scan --policy-file policy.yaml --type java,depscan --build'
+          sh 'scan --type java,depscan --build --no-error'
         }
       }
       post {

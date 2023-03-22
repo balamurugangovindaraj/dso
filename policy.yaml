@@ -1,8 +1,0 @@
-- id: CVE-2019-17571 
-  action: exclude
-- id: CVE-2022-23307
-  action: exclude
-- id: VE-2021-4104
-  action: exclude
-- id: CVE-2022-1471
-  action: exclude
